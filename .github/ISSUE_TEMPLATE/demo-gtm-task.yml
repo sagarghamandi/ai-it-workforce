@@ -1,0 +1,73 @@
+name: Demo/GTM Task
+description: Demo scripts, pitch narratives, pilot proposals, landing copy, discovery
+title: "[Demo/GTM] "
+labels: ["type:demo-gtm", "agent:demo-gtm-specialist"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What GTM asset is needed, for which customer/persona/event?
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: Deal/pilot/pipeline impact; monetization link.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Asset(s) in scope; which build/version claims must match.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Every claim demonstrable in the current build\n- [ ] Human approved before any external use"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [demo-gtm-specialist, customer-success-agent, ux-ui-designer, product-owner, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["Yes — always, before customer-facing use (default)", "No — internal draft only"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Overclaiming, pricing exposure, demo failure paths."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Demo environment needed? Stable URL? Est. cost."
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "Only synthetic data in demos unless approved."
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Demo rehearsal against the target build; fallback paths verified."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Asset complete, claims verified, human approval recorded before external use

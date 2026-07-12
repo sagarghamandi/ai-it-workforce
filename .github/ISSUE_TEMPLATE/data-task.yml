@@ -1,0 +1,72 @@
+name: Data Task
+description: Schema, ingestion, transformation, data quality, analytics structures
+title: "[Data] "
+labels: ["type:data", "agent:data-engineer"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: What product/analytics/AI capability does this data work enable?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Tables/pipelines/sources in scope. PostgreSQL is the default store.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Schema/pipeline behaves as specified\n- [ ] Data quality checks pass"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [data-engineer, ai-ml-engineer, full-stack-developer, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["No — new structures on a branch", "Yes — schema migration", "Yes — PII/production data involved", "Yes — data deletion/retention change"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Data loss, PII exposure, migration reversibility."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "DB tier/storage growth? Est. cost change?"
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "PII? Access controls? Gate 5 needed?"
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Data quality checks, migration up/down test, pipeline idempotency."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Schema/pipeline documented, quality checks in place, per definition-of-done.md

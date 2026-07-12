@@ -1,0 +1,55 @@
+# Demo deployment — PLACEHOLDER. Deploys nothing until deliberately configured.
+#
+# When Azure is ready (roadmap Phase 3), a human + DevSecOps agent will:
+#   1. Create Azure resources (human-approved, FinOps-reviewed — Gate 6):
+#      - Azure Static Web Apps (frontend)  → swa deploy or Azure/static-web-apps-deploy action
+#      - Azure Container Apps (backend)    → azure/container-apps-deploy-action
+#      - Azure Database for PostgreSQL, Key Vault, Application Insights
+#   2. Set up OIDC federation (azure/login with federated credentials —
+#      no long-lived cloud secrets stored in GitHub).
+#   3. Create a GitHub environment named "demo" with REQUIRED REVIEWERS —
+#      this is the mechanical enforcement of Gate 7 (human approves each deploy).
+#      For production later: environment "prod" with required reviewers = Gate 8.
+#   4. Replace the placeholder job below with real build + deploy steps.
+#
+# GCP portability equivalent: google-github-actions/auth (Workload Identity
+# Federation) + deploy to Cloud Run; same environment-protection pattern.
+
+name: Deploy Demo (placeholder)
+
+on:
+  workflow_dispatch:   # manual trigger only — never automatic
+
+permissions:
+  contents: read
+  # id-token: write    # uncomment when OIDC federation to Azure is configured
+
+jobs:
+  deploy-demo:
+    runs-on: ubuntu-latest
+    # environment: demo   # uncomment once the protected "demo" environment exists (Gate 7)
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Placeholder — not configured
+        run: |
+          echo "This is a placeholder. No deployment is configured."
+          echo "See comments at the top of this file and docs/delivery/deployment-guide.md"
+          echo "for the steps to enable Azure demo deployment (roadmap Phase 3)."
+
+      # --- Future Azure steps (illustrative, keep commented) ---
+      # - name: Azure login (OIDC)
+      #   uses: azure/login@v2
+      #   with:
+      #     client-id: ${{ vars.AZURE_CLIENT_ID }}
+      #     tenant-id: ${{ vars.AZURE_TENANT_ID }}
+      #     subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      #
+      # - name: Deploy backend to Azure Container Apps
+      #   uses: azure/container-apps-deploy-action@v2
+      #   with: { ... }
+      #
+      # - name: Deploy frontend to Azure Static Web Apps
+      #   uses: Azure/static-web-apps-deploy@v1
+      #   with: { ... }

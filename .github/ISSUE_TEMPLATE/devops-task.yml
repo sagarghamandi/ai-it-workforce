@@ -1,0 +1,72 @@
+name: DevOps Task
+description: CI/CD, environments, deployment, monitoring, rollback
+title: "[DevOps] "
+labels: ["type:devops", "agent:devsecops-engineer"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: What delivery capability or reliability does this add?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Workflows/environments/scripts in scope. Target env(s).
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Workflow runs green\n- [ ] Rollback plan documented"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [devsecops-engineer, cloud-architect, full-stack-developer, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["No — CI/local/dev only", "Yes — demo/stage deployment (Gate 7)", "Yes — production (Gate 8, human only)", "Yes — secrets/infra/DNS change"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Pipeline breakage, environment drift, failed rollback."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Resources touched/created; Actions minutes; est. cost."
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "Secrets flow? Permissions/OIDC scopes? Gate 5 needed?"
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Workflow dry-run, smoke tests post-deploy, rollback rehearsal."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Scripted, documented, rollback-ready, approvals wired, per definition-of-done.md

@@ -1,0 +1,71 @@
+name: Security Review
+description: Threat model, auth/dependency/secrets/privacy review, Gate 5 check
+title: "[Security] "
+labels: ["type:security", "agent:security-compliance-engineer", "gate:5"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is being reviewed (feature, PR, release) and why now?
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: Risk avoided; customer trust/compliance requirement served.
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Surface under review — code paths, auth flows, data, dependencies, prompts.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Findings documented with severity + mitigation\n- [ ] Gate 5 verdict issued (pass/block)\n- [ ] Exceptions (if any) human-approved"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [security-compliance-engineer, devsecops-engineer, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["Review itself: no — verdict may block", "Yes — security exception approval", "Yes — intrusive testing authorization"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Known concerns prompting this review."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Cloud config/identities in scope?"
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "This IS the security work — note criticality."
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Dependency audit, secret scan, auth tests, injection checks."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Full surface reviewed, findings + verdict recorded on the release issue

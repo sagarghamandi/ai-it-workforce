@@ -1,0 +1,71 @@
+name: QA/Test Task
+description: Test plans, automated tests, UAT scripts, Gate 4 verification
+title: "[QA] "
+labels: ["type:qa", "agent:qa-test-engineer"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What needs testing/verifying?
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: What failure does this coverage prevent (demo failure, regression, data loss)?
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Features/issues under test; test levels (unit/integration/API/e2e/regression/UAT).
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Every acceptance criterion in scope has a test or UAT step\n- [ ] Suite green in CI"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [qa-test-engineer, full-stack-developer, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["No — adding tests is autonomous", "Yes — UAT sign-off", "Yes — quality gate exception"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Coverage gaps, flaky tests, untestable requirements."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Test env needs? CI minutes?"
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "No production data in tests without approval."
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Frameworks, data, environments needed."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Traceability table complete, suite green, Gate 4 report issued where applicable

@@ -1,0 +1,26 @@
+# Secrets & environment — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# Dependencies & build output
+node_modules/
+dist/
+build/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logs
+*.log
+logs/

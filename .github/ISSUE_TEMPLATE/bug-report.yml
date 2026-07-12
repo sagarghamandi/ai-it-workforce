@@ -1,0 +1,79 @@
+name: Bug Report
+description: Something is broken or behaves incorrectly
+title: "[Bug] "
+labels: ["type:bug", "agent:qa-test-engineer"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken? Expected vs. actual, plus reproduction steps.
+      placeholder: |
+        Steps to reproduce:
+        1.
+        Expected:
+        Actual:
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options: [critical, major, minor, cosmetic]
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: Impact of the bug — who is affected, does it block a demo/release?
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Affected area/env/version; suspected blast radius of a fix.
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Bug no longer reproduces via steps above\n- [ ] Regression test added"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [full-stack-developer, data-engineer, ai-ml-engineer, devsecops-engineer, qa-test-engineer, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["No — autonomous scope", "Yes — touches schema/auth/billing/infra", "Yes — production hotfix (Gate 8)"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "Is this bug itself a security issue? If yes, flag Gate 5."
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Regression test is mandatory for bug fixes."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Fix + regression test + docs per .ai-workforce/definition-of-done.md

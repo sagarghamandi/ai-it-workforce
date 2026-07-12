@@ -1,0 +1,71 @@
+name: Documentation Task
+description: README, setup, API docs, deployment guide, release notes, user docs
+title: "[Docs] "
+labels: ["type:docs", "agent:technical-writer"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What documentation needs creating/updating, and what drifted?
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: Who is unblocked (new dev, pilot user, demo audience)?
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Files/sections in scope; internal vs customer-facing.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Docs match current behavior (verified against code)\n- [ ] A new reader can follow end-to-end"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [technical-writer, product-owner, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["No — internal docs (autonomous low-risk)", "Yes — customer-facing/external publication", "Yes — makes product commitments (SLA/roadmap)"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Documenting unshipped features; secrets in examples."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Usually none."
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "No credentials/internal endpoints exposed in examples."
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Walk through setup steps on a clean environment where practical."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Accurate, complete for scope, linked from the right index, PR opened

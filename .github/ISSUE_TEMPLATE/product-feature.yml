@@ -1,0 +1,74 @@
+name: Product Feature
+description: New feature or capability, owned by the Product Owner agent flow
+title: "[Feature] "
+labels: ["type:feature", "agent:product-owner"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What is the feature, in one or two sentences?
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: Customer value, demo value, monetization link.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: In scope / out of scope. MVP or Later?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: Testable criteria (Given/When/Then preferred).
+      placeholder: "- [ ] Given …, when …, then …"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [product-owner, ux-ui-designer, full-stack-developer, data-engineer, ai-ml-engineer, master-orchestrator, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      description: Per .ai-workforce/approval-policy.md
+      options: ["No — autonomous scope", "Yes — scope/product decision", "Yes — schema/auth/billing/infra", "Yes — customer-facing", "Yes — paid cloud service"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "none / new service? which? est. cost?"
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "none / auth / data / input handling — Gate 5 needed?"
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "unit / integration / e2e / UAT needed"
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Meets .ai-workforce/definition-of-done.md (tests, docs, PR, required reviews)

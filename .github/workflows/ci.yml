@@ -1,0 +1,94 @@
+# CI — safe, generic, auto-detecting.
+# This repo currently holds governance/docs; app code may be added later.
+# Each step no-ops cleanly if the relevant package files don't exist.
+# Uses no secrets. Non-destructive. Extend per-stack when a real app lands:
+#   - Node app:   uncomment/extend the Node job steps (lint/test/build scripts)
+#   - Python app: uncomment/extend the Python steps (ruff/pytest)
+#   - Full-stack: split into frontend/backend jobs with working-directory
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # ---------- Repo hygiene (always runs) ----------
+      - name: Scan for obvious committed secrets
+        run: |
+          # Cheap guard, not a replacement for real secret scanning (enable
+          # GitHub secret scanning / push protection in repo settings).
+          if grep -rInE "(api[_-]?key|secret|password)[\"']?\s*[:=]\s*[\"'][A-Za-z0-9/+_-]{16,}" \
+              --include='*.js' --include='*.ts' --include='*.py' --include='*.json' \
+              --include='*.yml' --include='*.yaml' --include='*.env' \
+              --exclude-dir=node_modules --exclude-dir=.git . 2>/dev/null \
+              | grep -v ".github/workflows/ci.yml"; then
+            echo "::error::Possible hardcoded secret found. Remove it and use env vars / Key Vault."
+            exit 1
+          fi
+          echo "No obvious hardcoded secrets found."
+
+      - name: Validate YAML files parse
+        run: |
+          python3 - <<'EOF'
+          import sys, glob, yaml
+          failed = False
+          for f in glob.glob('**/*.yml', recursive=True) + glob.glob('**/*.yaml', recursive=True):
+              try:
+                  with open(f) as fh:
+                      list(yaml.safe_load_all(fh))
+              except Exception as e:
+                  print(f"::error file={f}::YAML parse error: {e}")
+                  failed = True
+          sys.exit(1 if failed else 0)
+          EOF
+
+      # ---------- Node (runs only if package.json exists) ----------
+      - name: Set up Node
+        if: ${{ hashFiles('package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies
+        if: ${{ hashFiles('package.json') != '' }}
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Node lint / test / build (if scripts defined)
+        if: ${{ hashFiles('package.json') != '' }}
+        run: |
+          npm run lint --if-present
+          npm test --if-present -- --watch=false 2>/dev/null || npm test --if-present
+          npm run build --if-present
+
+      # ---------- Python (runs only if Python project files exist) ----------
+      - name: Set up Python
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml') != '' }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml') != '' }}
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ]; then pip install -e ".[dev]" 2>/dev/null || pip install -e . ; fi
+
+      - name: Python lint / test (if tools present)
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml') != '' }}
+        run: |
+          pip install ruff pytest 2>/dev/null || true
+          ruff check . || true   # advisory until a real app sets its own bar
+          if ls tests/ 2>/dev/null || ls test_*.py 2>/dev/null; then pytest; else echo "No tests yet."; fi

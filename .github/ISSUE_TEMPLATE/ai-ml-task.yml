@@ -1,0 +1,72 @@
+name: AI/ML Task
+description: Prompts, RAG, embeddings, model workflows, agent tools, evals
+title: "[AI/ML] "
+labels: ["type:ai-ml", "agent:ai-ml-engineer"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: The user-visible intelligence this delivers; demo value.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Pipeline/prompt/model in scope; quality bar (demo vs production).
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] Eval harness exists with golden set\n- [ ] Quality ≥ agreed bar on eval set\n- [ ] Cost estimate documented"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [ai-ml-engineer, data-engineer, full-stack-developer, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["No — prototype on branch with existing models", "Yes — model/provider choice with cost impact", "Yes — customer data in prompts/training", "Yes — quality bar exception"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Hallucination, prompt injection, cost blowout, eval blind spots."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Model/API used; est. tokens/request × volume = monthly cost (FinOps)."
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "Untrusted content in prompts? Data sent to external APIs?"
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "Eval harness is mandatory; regression evals in CI where practical."
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Eval results recorded, cost documented and FinOps-reviewed, per definition-of-done.md

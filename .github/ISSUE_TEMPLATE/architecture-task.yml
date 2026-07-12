@@ -1,0 +1,73 @@
+name: Architecture Task
+description: System/cloud design work, ADRs, API contracts
+title: "[Arch] "
+labels: ["type:architecture", "agent:solution-architect"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What needs designing or deciding?
+    validations:
+      required: true
+  - type: textarea
+    id: business-value
+    attributes:
+      label: Business value
+      description: What product outcome does this design unblock?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Components/boundaries in scope; what stays untouched.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] ADR written with options and consequences\n- [ ] Human architecture approval (Gate 2)"
+    validations:
+      required: true
+  - type: dropdown
+    id: agent-role
+    attributes:
+      label: Agent role
+      options: [solution-architect, cloud-architect, master-orchestrator, human]
+    validations:
+      required: true
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Human approval required?
+      options: ["Yes — Gate 2 architecture approval (default for this type)", "Yes — plus infra/cost approval", "No — exploratory analysis only"]
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      placeholder: "Lock-in, complexity, portability (Azure↔GCP), migration cost."
+  - type: input
+    id: cloud-impact
+    attributes:
+      label: Cloud impact
+      placeholder: "Services affected; FinOps review needed?"
+  - type: input
+    id: security-impact
+    attributes:
+      label: Security impact
+      placeholder: "Trust boundaries changed? Threat model update needed?"
+  - type: textarea
+    id: test-requirements
+    attributes:
+      label: Test requirements
+      placeholder: "How will the design be validated (spike, prototype, review)?"
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Design documented, ADR recorded, Gate 2 approval obtained
